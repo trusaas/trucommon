@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        "removeComments": true, 
+        "resolveJsonModule": true, 
+        "noUnusedParameters": false, 
+        "allowSyntheticDefaultImports": true, 
+        "importHelpers": true, 
+        "watch": true,
+        "target": "es2017", 
+        "noImplicitAny": true,
+        "noUnusedLocals": false,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "forceConsistentCasingInFileNames": true,
+        "preserveConstEnums": true,
+        "strictNullChecks": true,
+        "sourceMap": true,
+        "pretty": true,
+        "allowJs": true, 
+        "outDir": "./dist",
+        "moduleResolution": "node",
+        "lib": [
+            "es2017"
+        ],
+        "rootDir": "./",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "module": "commonjs"
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "node_modules/**/*",
+        ".serverless/**/*",
+        ".webpack/**/*",
+        "_warmup/**/*",
+        ".vscode/**/*",
+        "*.config.js",
+        "**/*.js"
+    ]
+}

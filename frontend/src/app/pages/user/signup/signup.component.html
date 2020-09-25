@@ -1,0 +1,81 @@
+<div class="authentication">
+  <div class="authentication-inner">
+    <nz-card>
+      <form nz-form [formGroup]="signupForm" class="simple-form" (ngSubmit)="submitSignupForm()">
+        <nz-form-item>
+          <h2 class="form-header" nz-typography>Signup</h2>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Account/Company Name!">
+            <nz-input-group nzPrefixIcon="bank">
+              <input type="text" nz-input formControlName="account" placeholder="Account/Company Name" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Name!">
+            <nz-input-group nzPrefixIcon="user">
+              <input type="text" nz-input formControlName="name" placeholder="Your Name" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="emailErrorTpl">
+            <ng-template #emailErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('emailCustom')">
+                E-mail! is not valid
+              </ng-container>
+              <ng-container *ngIf="control.hasError('required')">
+                Please input your E-mail!
+              </ng-container>
+            </ng-template>
+            <nz-input-group nzPrefixIcon="mail">
+              <input type="text" nz-input formControlName="email" placeholder="name@company.com" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="passwordErrorTpl">
+              <ng-template #passwordErrorTpl let-control>
+                <ng-container *ngIf="control.hasError('passwordLength')">
+                  Password! must be between 6-20 characters
+                </ng-container>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please input your Password!
+                </ng-container>
+              </ng-template>
+            <nz-input-group nzPrefixIcon="lock"  [nzSuffix]="pwdSuffixTemplate">
+              <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password" placeholder="Password" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="confirmPasswordErrorTpl">
+              <ng-template #confirmPasswordErrorTpl let-control>
+                <ng-container *ngIf="control.hasError('confirmPassword')">
+                  Confirm Password must be same as Password!
+                </ng-container>
+                <ng-container *ngIf="control.hasError('required')">
+                  Please confirm your password!
+                </ng-container>
+              </ng-template>
+            <nz-input-group nzPrefixIcon="check-circle" [nzSuffix]="cnfmPwdSuffixTemplate">
+              <input [type]="cnfmPasswordVisible ? 'text' : 'password'" nz-input formControlName="confirmPassword" placeholder="Confirm Password" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <!--[disabled]="!signupForm.valid"-->
+        <button nz-button class="full-width form-margin"
+        [nzType]="'primary'">Signup</button>
+        Or <a [routerLink]="['/signin']"> already have account! </a>
+      </form>
+    </nz-card>
+  </div>
+</div>
+
+<ng-template #cnfmPwdSuffixTemplate>
+  <i nz-icon [nzType]="cnfmPasswordVisible ? 'eye-invisible' : 'eye'" (click)="cnfmPasswordVisible = !cnfmPasswordVisible"></i>
+</ng-template>
+<ng-template #pwdSuffixTemplate>
+  <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+</ng-template>

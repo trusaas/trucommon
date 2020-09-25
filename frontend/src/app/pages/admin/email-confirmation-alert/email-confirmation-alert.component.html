@@ -1,0 +1,60 @@
+<div *ngIf="svc.session?.status==='Confirmation Pending'"
+class="account-status-message"
+>
+    <nz-alert nzType="warning" nzCloseable="false" nzBanner="false"
+    [nzMessage]="accountConfirmationAlertTemplate" nzShowIcon>
+  </nz-alert>
+</div>
+
+<ng-template #accountConfirmationAlertTemplate>
+  Please Confirm your Email id "{{svc.session?.email}}"
+  <a
+  (click)="resendConfirmation()"
+  class="a-btn" nz-tooltip nzTooltipTitle="Resend confirmation" nzTooltipPlacement="bottom" >
+    <i nz-icon nzType="mail"></i>re-send
+  </a>
+  <a
+  (click)="chnageMail()"
+  class="a-btn last" nz-tooltip nzTooltipTitle="Change mail" nzTooltipPlacement="bottom" >
+    <i nz-icon nzType="mail"></i>change
+  </a>
+</ng-template>
+
+<nz-modal [(nzVisible)]="accountEmail.visible" nzTitle="Change email"
+nzMaskClosable=false
+nzKeyboard=false
+[nzClosable]="accountEmail.closable"
+[nzFooter]=null
+(nzOnCancel)="accountEmail.visible=false;">
+<nz-spin
+    class="comp-spinner"
+    [nzSpinning]="accountEmail.loading"
+    nzSize="large">
+
+<form nz-form [formGroup]="accountEmail.form">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="emailErrorTpl">
+      <ng-template #emailErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('emailCustom')">
+          E-mail! is not valid
+        </ng-container>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your E-mail!
+        </ng-container>
+      </ng-template>
+      <nz-input-group nzPrefixIcon="mail">
+        <input type="text" nz-input formControlName="email" placeholder="name@company.com" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="full-width">
+    <!--[disabled]="!accountEmail.form.valid"-->
+    <button nz-button class="float-right"
+    (click)="submitChangeEmail()"
+    [nzType]="'primary'">Update</button>
+    <button nz-button class="float-right margin-right10"
+    (click)="accountEmail.visible=false;accountEmail.form.reset();">Cancel</button>
+  </div>
+</form>
+</nz-spin>
+</nz-modal>

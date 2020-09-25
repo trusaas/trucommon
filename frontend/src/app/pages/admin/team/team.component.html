@@ -1,0 +1,65 @@
+<ng-container *ngIf="svc?.selectedAccount?.status !== 'Confirmation Pending'">
+  <button nz-button class="tru-admin-btn-primary" nzType="primary"
+    *ngIf="svc?.selectedAccount?.role==='Account Admin'"
+    (click)="showInviteAdd()"
+  >Add new teammates</button>
+  <nz-tabset [(nzSelectedIndex)]="tabIndex">
+    <nz-tab nzTitle="Teammates">
+      <ng-template nz-tab>
+        <app-teammates-table></app-teammates-table>
+      </ng-template>
+    </nz-tab>
+    <nz-tab nzTitle="Invite Sent">
+      <ng-template nz-tab>
+        <app-team-invites-table #teamInvites></app-team-invites-table>
+      </ng-template>
+
+    </nz-tab>
+  </nz-tabset>
+  <nz-modal [(nzVisible)]="inviteTeammate.visible" nzTitle="Invite Teammates"
+  nzMaskClosable=false
+  nzWidth="640"
+  nzKeyboard=false
+  [nzClosable]="inviteTeammate.closable"
+  [nzFooter]=null
+  (nzOnCancel)="inviteTeammate.visible=false;">
+  <nz-spin
+  class="comp-spinner"
+  [nzSpinning]="inviteTeammate.loading"
+  nzSize="large">
+  <form nz-form [formGroup]="inviteTeammate.form">
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="emailErrorTpl">
+        <ng-template #emailErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('emailCustom')">
+            E-mail! is not valid
+          </ng-container>
+          <ng-container *ngIf="control.hasError('required')">
+            Please input your Invitee E-mails!
+          </ng-container>
+        </ng-template>
+        <nz-input-group style="border: 1px solid #f0f0f0;">
+          <tag-input formControlName="emails"
+          secondaryPlaceholder="Invitee E-mails!"
+          placeholder="+ Email"
+          [modelAsStrings]="true">
+          </tag-input>
+        </nz-input-group>
+        <span style="font-size: 12px;"><b>Note: </b> Please hit ⏎ enter to add multiple emails</span>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="full-width">
+      <!--[disabled]="!inviteTeammate.form.valid"-->
+      <button nz-button class="float-right"
+      (click)="submitInviteForm()"
+      [nzType]="'primary'">Invite</button>
+      <button nz-button class="float-right margin-right10"
+      (click)="inviteTeammate.visible=false;inviteTeammate.form.reset();">Cancel</button>
+    </div>
+  </form>
+  </nz-spin>
+  </nz-modal>
+</ng-container>
+<ng-container *ngIf="svc?.selectedAccount?.status === 'Confirmation Pending'">
+  <app-confirmation-pending></app-confirmation-pending>
+</ng-container>

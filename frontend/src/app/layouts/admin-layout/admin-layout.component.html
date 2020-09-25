@@ -1,0 +1,129 @@
+<nz-layout>
+  <nz-sider class="tru-admin-nav-primary" [nzCollapsed]="true">
+    <div class="logo">
+      <a [routerLink]="['/']" nz-tooltip nzTooltipTitle="Home"
+      nzTooltipPlacement="right">
+        <figure>
+          <img alt="Logo" width="32" src="/assets/images/logo.svg" />
+        </figure>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" class="sidebar-menu">
+      <li nz-menu-item *ngFor="let item of menus; let i = index"
+      [nzPaddingLeft]=32
+      nz-tooltip nzTooltipTitle="{{item.title}}"
+      nzTooltipPlacement="right"
+      [routerLink]="['/a',appId,item.code]"
+      [routerLinkActiveOptions]="{match:true}" routerLinkActive="ant-menu-item-selected"
+      >
+        <i nz-icon nzType="{{item.icon}}"></i>
+        <span>{{item.name}}</span>
+      </li>
+      <li nz-menu-item class="profile" [nzDisabled]="true" [nzPaddingLeft]=16 nz-popover
+        [nzPopoverTitle]="profileTitleTemplate" nzPopoverTrigger="click" [nzPopoverContent]="profileTemplate"
+        nzPopoverPlacement="rightBottom" [(nzPopoverVisible)]="profile.visible">
+        <i nz-icon>
+          <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="svc.session.avatar"></nz-avatar>
+        </i>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-sider class="tru-admin-nav-secondary" *ngIf="svc.secondMenu.selected"
+  [nzTheme]="'light'"
+  nzCollapsedWidth="14" [(nzCollapsed)]="svc.secondMenu.collapse">
+    <button (click)="svc.secondMenu.toggle()"
+    class="toggle"
+    nz-button nzType="primary" [nzSize]="'small'" nzShape="circle">
+      <i nz-icon [nzType]="svc.secondMenu.handleIcon"></i>
+    </button>
+    <div *ngIf="!svc.secondMenu.collapse" class="second-menu-head">
+      <i nz-icon nzType="{{svc.secondMenu?.selected?.icon}}"></i>
+      {{svc.secondMenu?.selected?.name}}
+    </div>
+    <ul *ngIf="!svc.secondMenu.collapse" nz-menu>
+      <li nz-menu-item *ngFor="let item of svc.secondMenu.items; let i = index"
+      nz-tooltip nzTooltipTitle="{{item.title}}"
+      nzTooltipPlacement="right"
+      [routerLink]="['/a',appId,svc.secondMenu?.selected?.code,item.code]"
+      [routerLinkActiveOptions]="{match:true}" routerLinkActive="ant-menu-item-selected"
+      >
+        <i nz-icon nzType="{{item.icon}}"></i>
+        <span>{{item.name}}</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-content>
+    <div class="inner-content">
+      <app-email-confirmation-alert></app-email-confirmation-alert>
+      <app-breadcrumb></app-breadcrumb>
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+</nz-layout>
+
+<ng-template #profileTitleTemplate>
+  Hi, {{svc.session.name}} !
+  <i style="cursor: pointer;float: right;margin-top: 4px;" (click)="svc.user.signout(svc)"
+      nz-tooltip nzTooltipTitle="Signout"
+      nzTooltipPlacement="right"
+      nz-icon nzType="logout"></i>
+</ng-template>
+<ng-template #profileTemplate>
+  <div>
+    <p>{{svc.session.email}}</p>
+    <h4>Account(s)
+      <i style="cursor: pointer;float: right;margin-top: 4px;" (click)="addAccount()"
+      nz-tooltip nzTooltipTitle="Add Account"
+      nzTooltipPlacement="right"
+      nz-icon nzType="plus-circle"></i>
+    </h4>
+    <ul>
+      <li *ngFor="let item of svc.session.userAccounts"  >
+       <a style="color:#001529"
+       [ngStyle]="{'font-weight':item.account.appId===appId?'bold':''}"
+       [routerLink]="['/a',item.account.appId,'dashboard']"
+       (click)="profile.visible=false" >
+         {{item.account.name}}
+      </a>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+<nz-modal [(nzVisible)]="account.visible" nzTitle="Add Account"
+nzMaskClosable=false
+nzKeyboard=false
+[nzClosable]="account.closable"
+[nzFooter]=null
+(nzOnCancel)="account.visible=false;">
+<nz-spin *ngIf="svc?.selectedAccount?.status !== 'Confirmation Pending'"
+    class="comp-spinner"
+    [nzSpinning]="account.loading"
+    nzSize="large">
+
+<form nz-form [formGroup]="account.form">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="accountErrorTpl">
+      <ng-template #accountErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your Account/Company Name!
+        </ng-container>
+      </ng-template>
+      <nz-input-group nzPrefixIcon="bank">
+        <input type="text" nz-input formControlName="account" placeholder="Account/Company Name" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="full-width">
+    <!--[disabled]="!account.form.valid"-->
+    <button nz-button class="float-right"
+    (click)="submitAccount()"
+    [nzType]="'primary'">Add</button>
+    <button nz-button class="float-right margin-right10"
+    (click)="account.visible=false;account.form.reset();">Cancel</button>
+  </div>
+</form>
+</nz-spin>
+<ng-container *ngIf="svc?.selectedAccount?.status === 'Confirmation Pending'">
+  <app-confirmation-pending></app-confirmation-pending>
+</ng-container>
+</nz-modal>

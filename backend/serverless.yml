@@ -1,0 +1,59 @@
+service: 
+  name: trucommon
+package:
+  individually: false 
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stackName: ${self:service}-${self:provider.stage}
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'ap-south-1'}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource: "*"    
+    - Effect: Allow
+      Action:
+        - "execute-api:Invoke"
+        - "execute-api:ManageConnections"
+      Resource:
+        - "arn:aws:execute-api:*:*:*"
+  environment:
+    API_REGION: "${self:provider.region}"  
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-dotenv-plugin
+custom:
+  serverless-offline:
+    useChildProcesses: true
+functions:
+  account-handler:
+    handler: src/handler/account-handler.handler
+    events:
+      - http: 
+          method: any
+          cors: true 
+          path: /account/{path}    
+  dashboard-handler:
+    handler: src/handler/dashboard-handler.handler
+    events:
+      - http: 
+          method: any
+          cors: true  
+          path: /dashboard/{path}
+  team-handler:
+    handler: src/handler/team-handler.handler
+    events:
+      - http: 
+          method: any
+          cors: true  
+          path: /team/{path}  
+  user-handler:
+    handler: src/handler/user-handler.handler
+    events:
+      - http: 
+          method: any
+          cors: true  
+          path: /user/{path}   

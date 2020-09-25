@@ -1,0 +1,8 @@
+<nz-result nzStatus="warning" [nzTitle]="titleTemplate" nzSubTitle="Sorry, Your account is not active">
+  <div nz-result-extra>
+    Please confirm your email to perform this operation
+  </div>
+</nz-result>
+<ng-template #titleTemplate>
+  <div class="text-align-center">Your email "{{svc.session.email}}" is not verified</div>
+</ng-template>

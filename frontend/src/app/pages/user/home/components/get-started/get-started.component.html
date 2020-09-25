@@ -1,0 +1,31 @@
+<section class="get-started position-relative">
+  <div class="container">
+    <div class="main-content">
+      <div class="content inner-content">
+        <h2>Great customer relationships start here</h2>
+      </div>
+
+      <div *ngIf="svc.session==null" class="getstarted-form inner-content">
+        <form>
+          <div class="form-inner">
+            <div class="input-field">
+              <input type="email" placeholder="Your email address" required="" name="email">
+            </div>
+            <button class="btn btn-primary" type="submit">Get Started</button>
+          </div>
+        </form>
+        <div class="tags">
+          <span><i nz-icon nzType="check" nzTheme="outline"></i>Messenger</span>
+          <span><i nz-icon nzType="check" nzTheme="outline"></i>Product Tours</span>
+          <span><i nz-icon nzType="check" nzTheme="outline"></i>Inbox and more</span>
+        </div>
+      </div>
+
+      <div class="getstarted-form inner-content" *ngIf="svc.session!==null">
+        <a [routerLink]="['/a',svc.session.userAccounts[0].account.appId,'dashboard']"
+          class="btn btn-primary loggedin-btn">Go to Dashboard <i nz-icon nzType="arrow-right"
+            nzTheme="outline"></i></a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,95 @@
+<div class="authentication">
+<div class="authentication-inner">
+  <nz-card>
+    <form nz-form [formGroup]="signinForm" class="simple-form" (ngSubmit)="submitSigninForm()">
+      <nz-form-item>
+        <h2 class="form-header" nz-typography>Signin</h2>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="emailErrorTpl">
+          <ng-template #emailErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('emailCustom')">
+              E-mail! is not valid
+            </ng-container>
+            <ng-container *ngIf="control.hasError('required')">
+              Please input your E-mail!
+            </ng-container>
+          </ng-template>
+          <nz-input-group nzPrefixIcon="mail">
+            <input type="text" nz-input formControlName="email" placeholder="name@company.com" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="passwordErrorTpl">
+            <ng-template #passwordErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('passwordLength')">
+                Password! must be between 6-20 characters
+              </ng-container>
+              <ng-container *ngIf="control.hasError('required')">
+                Please input your Password!
+              </ng-container>
+            </ng-template>
+          <nz-input-group nzPrefixIcon="lock" [nzSuffix]="pwdSuffixTemplate">
+            <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password" placeholder="Password" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row class="form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="remember">
+            <span>Remember me</span>
+          </label>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <a (click)="showForgotPassword()" class="float-right">Forgot password</a>
+        </div>
+      </div>
+      <!--[disabled]="!signinForm.valid"-->
+      <button nz-button class="full-width form-margin"
+      [nzType]="'primary'">Log in</button>
+      Or <a [routerLink]="['/signup']"> register now! </a>
+    </form>
+  </nz-card>
+</div>
+</div>
+<ng-template #pwdSuffixTemplate>
+  <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+</ng-template>
+<nz-modal [(nzVisible)]="forgot.visible" nzTitle="Forgot password"
+nzMaskClosable=false
+nzKeyboard=false
+[nzClosable]="forgot.closable"
+[nzFooter]=null
+(nzOnCancel)="forgot.visible=false;">
+<nz-spin
+    class="comp-spinner"
+    [nzSpinning]="forgot.loading"
+    nzSize="large">
+<form nz-form [formGroup]="forgot.form">
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="emailErrorTpl">
+      <ng-template #emailErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('emailCustom')">
+          E-mail! is not valid
+        </ng-container>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your E-mail!
+        </ng-container>
+      </ng-template>
+      <nz-input-group nzPrefixIcon="mail">
+        <input type="text" nz-input formControlName="email" placeholder="name@company.com" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="full-width">
+    <!--[disabled]="!forgot.form.valid"-->
+    <button nz-button class="float-right"
+    (click)="submitForgotForm()"
+    [nzType]="'primary'">Request</button>
+    <button nz-button class="float-right margin-right10"
+    (click)="forgot.visible=false;forgot.form.reset();">Cancel</button>
+  </div>
+</form>
+</nz-spin>
+</nz-modal>

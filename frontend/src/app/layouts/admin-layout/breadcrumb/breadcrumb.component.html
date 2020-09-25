@@ -1,0 +1,19 @@
+<nz-breadcrumb *ngIf="breadcrumbSvc.userAccount" >
+  <nz-breadcrumb-item>
+    <a
+    nz-tooltip nzTooltipTitle="Home" nzTooltipPlacement="bottom"
+    [routerLink]="['/a',breadcrumbSvc.userAccount.account.appId,'dashboard']"><i nz-icon nzType="home"></i><span>Home</span></a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item *ngFor="let item of breadcrumbSvc.location">
+    <a
+    nz-tooltip nzTooltipTitle="{{item.title}}" nzTooltipPlacement="bottom"
+    [routerLink]="
+    item.path?['/a',breadcrumbSvc.userAccount.account.appId,item.path,item.code]:
+              ['/a',breadcrumbSvc.userAccount.account.appId,item.code]"><i nz-icon nzType="{{item.icon}}"></i><span>{{item.name}}</span></a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<h4 *ngIf="breadcrumbSvc.userAccount" class="account-name-headding">{{breadcrumbSvc.userAccount.account.name}}</h4>
+
+<nz-page-header class="site-page-header" [nzTitle]="breadcrumbSvc.page.name"
+(nzBack)="location.back()"
+nzBackIcon></nz-page-header>

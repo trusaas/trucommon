@@ -1,0 +1,54 @@
+<section class="pricing container">
+  <h2>Pricing</h2>
+  <div nz-row>
+    <div nz-col nzSm="24" nzMd="12">
+      <div class="pricing-calculator">
+        <h5>We have the flat almost free pricing plan for everyone</h5>
+        <h5>Pricing Calculator</h5>
+        <div class="calculator views">
+          <span class="price-content">Your monthly page views<i class="fa fa-info-circle" aria-hidden="true"></i>
+          </span>
+          <input type="number">
+          <span>millions</span>
+          <b>$3.50</b>
+        </div>
+        <div class="calculator messages">
+          <span class="price-content">Your monthly chat messages<i class="fa fa-info-circle" aria-hidden="true"></i>
+          </span>
+          <input type="number">
+          <span>millions</span>
+          <b>$3.50</b>
+        </div>
+        <div class="calculator connections">
+          <span class="price-content">Your monthly chat connections<i class="fa fa-info-circle"
+              aria-hidden="true"></i>
+          </span>
+          <input type="number">
+          <span>millions</span>
+          <b>$3.50</b>
+        </div>
+        <div class="total">
+          <span> Expected Total monthly cost : </span> <b>$3.50</b>
+        </div>
+        <span><i nz-icon nzType="check" nzTheme="outline"></i>No hidden costs or separate costs or additional
+          costs</span>
+      </div>
+    </div>
+    <div nz-col nzSm="24" nzMd="12">
+      <div class="pricing-details">
+        <h5>We have the flat almost free pricing plan for everyone</h5>
+        <ul>
+          <li><i nz-icon nzType="check" nzTheme="outline"></i>Dont pay for operators/seats</li>
+          <li><i nz-icon nzType="check" nzTheme="outline"></i>Dont pay for number of customers/visitors</li>
+          <li><i nz-icon nzType="check" nzTheme="outline"></i>Dont pay for user segmentation/engagement</li>
+          <li><i nz-icon nzType="check" nzTheme="outline"></i>Dont pay private notes/help articles</li>
+        </ul>
+        <a [routerLink]="['/signup']" *ngIf="svc.session==null" class="btn btn-primary">Get Started</a>
+        <ul>
+          <li style="margin-top: 12px;"><i nz-icon nzType="check" nzTheme="outline"></i>No Credit Card required, life
+            time free.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

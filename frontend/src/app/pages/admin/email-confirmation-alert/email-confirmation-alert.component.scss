@@ -1,0 +1,18 @@
+.account-status-message{
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  a.a-btn{
+    border: 1px solid #FAAD14;
+    padding: 1px 3px;
+    border-radius: 3px;
+    background-color: antiquewhite;
+    margin-right: 3px;
+    i{
+      margin-right: 2px;
+    }
+  }
+  a.last{
+    margin-right: 0;
+  }
+}

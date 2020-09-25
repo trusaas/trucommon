@@ -1,0 +1,62 @@
+<div class="tru-admin-tab-content">
+  <nz-table #teamInviteesTable
+    nzShowSizeChanger
+    [nzData]="dataTable.rowsData"
+    [nzFrontPagination]="false"
+    [nzLoading]="dataTable.loading"
+    [nzTotal]="dataTable.total"
+    [nzPageSize]="dataTable.pageSize"
+    [nzPageIndex]="dataTable.pageIndex"
+    (nzQueryParams)="dataTable.loadDataFromServer($event)"
+    [nzData]="dataTable.rowsData"
+    [nzShowTotal]="rangeTemplate"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="40%" nzColumnKey="user.email" nzCustomFilter
+        [nzSortFn]="true" >Details <!--[nzSortOrder]="'ascend'"-->
+          <nz-filter-trigger [(nzVisible)]="dataTable.customFilter.email.visible" [nzActive]="dataTable.customFilter.email.value.length > 0" [nzDropdownMenu]="emailTableFilterDropMenu">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th nzWidth="30%" nzColumnKey="updatedAt" [nzSortFn]="true" >Sent At</th>
+        <th nzWidth="20%" nzColumnKey="status" [nzSortFn]="true" >Status</th>
+        <th *ngIf="svc?.selectedAccount?.role==='Account Admin'" nzWidth="10%" nzColumnKey="action" >Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of teamInviteesTable.data">
+        <td>
+          <nz-avatar style="float: left;margin: 0px 10px 0 0;" nzIcon="user" [nzSrc]="'//www.gravatar.com/avatar/'+svc.truUtils.md5.hashStr(data.user.email)+'?d=wavatar'"></nz-avatar>
+          <span style="display: block;float: left;margin-top: 5px;">
+            {{ data.user.email }}
+          </span>
+        </td>
+        <td>{{data.updatedAt | date:'medium'}}</td>
+        <td>{{data.status}}</td>
+        <td *ngIf="svc?.selectedAccount?.role==='Account Admin'">
+          <a
+          (click)="resend(data)"
+          class="a-btn last"
+          nz-tooltip nzTooltipTitle="Resend invitation" nzTooltipPlacement="bottom" >
+            <i nz-icon nzType="mail"></i>re-send
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+<nz-dropdown-menu #emailTableFilterDropMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="dataTable.customFilter.email.value" />
+      <button nz-button nzSize="small" nzType="primary" (click)="dataTable.loadDataFromServer(null,{filter:'email'})" class="search-button">
+        Search
+      </button>
+      <button nz-button nzSize="small" (click)="dataTable.loadDataFromServer(null,{resetFilter:'email'})">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+<ng-template #rangeTemplate let-range="range" let-total>
+  <a title="Reload" class="table-reload" (click)="dataTable.reload()"><i nz-icon nzType="reload"></i></a>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items </ng-template>

@@ -1,0 +1,42 @@
+<section class="banner">
+  <div class="container">
+    <div class="content">
+      <h1>Live chat support software for free or less price</h1>
+      <p>Install a live chat widget on your website, answer customer questions and increase your sales. You need to
+        pay for what you are using. Pay as you Go...</p>
+
+      <div *ngIf="svc.session==null" class="banner-btn-sec">
+        <form>
+          <div class="form-group">
+            <input type="text" placeholder="Your business email" class="input-border-radius">
+            <button class="btn btn-primary border-radius">Get Started</button>
+          </div>
+        </form>
+
+        <a href="" class="btn btn-primary-outline">Contact Support</a>
+      </div>
+
+      <ul *ngIf="svc.session==null">
+        <li><i nz-icon nzType="check" nzTheme="outline"></i>
+          No credit card required</li>
+        <li><i nz-icon nzType="check" nzTheme="outline"></i>
+          12 month free tier available</li>
+        <li><i nz-icon nzType="check" nzTheme="outline"></i>
+          Pay as you go</li>
+        <li><i nz-icon nzType="check" nzTheme="outline"></i>
+          All features included in free plan</li>
+      </ul>
+      <a href="" *ngIf="svc.session==null">Learn more about the pricing</a>
+
+      <div *ngIf="svc.session!==null" class="dashboard-btn">
+        <a [routerLink]="['/a',svc.session.userAccounts[0].account.appId,'dashboard']" class="btn btn-primary">Go to
+          Dashboard <i nz-icon nzType="arrow-right" nzTheme="outline"></i></a>
+      </div>
+    </div>
+    <div class="img-sec">
+      <figure>
+        <img src="/assets/images/banner-img.png" alt="banner-img">
+      </figure>
+    </div>
+  </div>
+</section>

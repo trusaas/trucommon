@@ -1,0 +1,63 @@
+<nz-layout>
+  <nz-header style="padding:0 8px;" >
+    <div class="logo float-left">
+      <a [routerLink]="['/']"
+        nz-tooltip nzTooltipTitle="Home"
+        nzTooltipPlacement="bottom"
+      >
+      <figure>
+        <img width="32" alt="Angular Logo" src="/assets/images/logo.svg" />
+      </figure>
+      TruCommon
+      </a>
+    </div>
+    <ul class="nav">
+        <li
+          routerLink="." [fragment]="features.code">
+          <span>{{features.name}}</span>
+        </li>
+        <li
+          routerLink="." [fragment]="pricing.code">
+          <span>{{pricing.name}}</span>
+        </li>
+        <li [routerLinkActive]="['is-active']"
+          [routerLinkActiveOptions]="{exact: true}"
+          [routerLink]="['/',help.code]">
+          <span>{{help.name}}</span>
+        </li>
+        <li
+          *ngIf="svc.session==null"
+          [routerLinkActive]="['is-active']"
+          [routerLinkActiveOptions]="{exact: true}"
+          [routerLink]="['/',signin.code]">
+          <span>{{signin.name}}</span>
+        </li>
+        <li
+          *ngIf="svc.session!=null"
+          [routerLinkActive]="['is-active']"
+          [routerLinkActiveOptions]="{exact: true}"
+          [routerLink]="['/a',svc.session.userAccounts[0].account.appId]">
+          <span>{{my_account.name}}</span>
+        </li>
+     </ul>
+<!--[routerLinkActiveOptions]="{match:true}" routerLinkActive="ant-menu-item-selected"-->
+    <a *ngIf="svc.session==null" [routerLinkActive]="['is-active']" [routerLink]="['/'+signup.code]"
+    class="btn btn-primary">{{signup.name}}</a>
+  </nz-header>
+  <nz-content>
+    <div class="inner-content" role="main">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer>
+    <footer class="container">
+      <ul>
+        <li><a href="#">Terms</a></li>
+        <li><a routerLink="." fragment="privacy_security">Privacy</a></li>
+        <li><a href="#">Status</a></li>
+        <li><a routerLink="." fragment="privacy_security">Security</a></li>
+      </ul>
+      <p>Made with <img src="/assets/images/like.svg" alt=""> from truresponse©2020. All rights reserved.</p>
+    </footer>
+  </nz-footer>
+</nz-layout>

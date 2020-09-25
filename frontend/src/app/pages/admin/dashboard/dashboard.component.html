@@ -1,0 +1,117 @@
+<!--https://swimlane.gitbook.io/ngx-charts/examples/pie-charts/pie-chart#pie-chart-->
+<div nz-row [nzGutter]="8" class="admin-container">
+  <div nz-col [nzSpan]="8">
+    <nz-spin class="comp-spinner" [nzSpinning]="singleLoading" nzSize="large">
+      <nz-card nzTitle="Bar Graph Vertical" class="admin-chart-cards">
+        <ngx-charts-bar-vertical
+          [scheme]="colorScheme"
+          [results]="single"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          (select)="onSelect($event)"
+        >
+        </ngx-charts-bar-vertical>
+      </nz-card>
+    </nz-spin>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <nz-spin class="comp-spinner" [nzSpinning]="multiLoading" nzSize="large">
+      <nz-card nzTitle="Bar Graph Horizontal Stacked" class="admin-chart-cards">
+        <ngx-charts-bar-horizontal-stacked
+          [scheme]="colorScheme"
+          [results]="multi"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          (select)="onSelect($event)"
+        >
+        </ngx-charts-bar-horizontal-stacked>
+      </nz-card>
+    </nz-spin>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <nz-spin class="comp-spinner" [nzSpinning]="singleLoading" nzSize="large">
+      <nz-card class="admin-chart-cards" nzTitle="Pie Chart">
+        <ngx-charts-pie-chart
+          [view]="[390, 260]"
+          [doughnut]="false"
+          [labels]="true"
+          [scheme]="colorScheme"
+          [results]="single"
+          [gradient]="gradient"
+          (select)="onSelect($event)"
+        >
+        </ngx-charts-pie-chart>
+      </nz-card>
+    </nz-spin>
+  </div>
+
+  <div nz-col [nzSpan]="8">
+    <nz-spin class="comp-spinner" [nzSpinning]="singleLoading" nzSize="large">
+      <nz-card class="admin-chart-cards" nzTitle="Pie Chart Doughnut">
+        <div style="padding-left: 6px">
+          <ngx-charts-pie-chart
+            [view]="[390, 215]"
+            [doughnut]="true"
+            [scheme]="colorScheme"
+            [results]="single"
+            [gradient]="gradient"
+            [legend]="true"
+            [legendTitle]="''"
+            [legendPosition]="'below'"
+            (select)="onSelect($event)"
+          >
+          </ngx-charts-pie-chart>
+        </div>
+      </nz-card>
+    </nz-spin>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <nz-spin class="comp-spinner" [nzSpinning]="bubbleLoading" nzSize="large">
+      <nz-card class="admin-chart-cards" nzTitle="Bubble Chart">
+        <ngx-charts-bubble-chart
+          [scheme]="colorScheme"
+          [results]="bubbleData"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [xScaleMin]="1990"
+          [xScaleMax]="2010"
+          [yScaleMin]="70"
+          [yScaleMax]="85"
+          [minRadius]="20"
+          [maxRadius]="5"
+          (select)="onSelect($event)"
+        >
+        </ngx-charts-bubble-chart>
+      </nz-card>
+    </nz-spin>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <nz-spin class="comp-spinner" [nzSpinning]="singleLoading" nzSize="large">
+      <nz-card nzTitle="Gauge Chart" class="admin-chart-cards">
+        <ngx-charts-gauge
+          [scheme]="colorScheme"
+          [results]="single"
+          (select)="onSelect($event)"
+        >
+        </ngx-charts-gauge>
+      </nz-card>
+    </nz-spin>
+  </div>
+</div>
